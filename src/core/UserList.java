@@ -36,11 +36,14 @@ public class UserList extends ArrayList<User> {
     }
 
     public void writeToFile() throws FileNotFoundException {
-        PrintWriter out = new PrintWriter(FILENAME);
+        File file = new File(FILENAME);
+        PrintWriter out = new PrintWriter(file);
         out.println("username, password, fullName, phoneNumber, email");
         for (User user : this) {
             out.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getFullName() + ", " + user.getPhoneNumber() + ", " + user.getEmail());
         }
+        out.flush();
+        out.close();
     }
 
     public User login() {
