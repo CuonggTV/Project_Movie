@@ -43,8 +43,6 @@ public class MovieList extends ArrayList<Movie> {
         }
         out.flush();
         out.close();
-
-
     }
 
 }
