@@ -1,10 +1,18 @@
 package utils;
 
-public class MyUtils {
-    private int aa = 0;
+import java.util.Scanner;
 
-    public MyUtils(int aa) {
-        this.aa = aa;
+public class MyUtil {
+    public static String inputString(String message) {
+        Scanner sc = new Scanner(System.in);
+
+        do {
+            System.out.println(message);
+            String value = sc.nextLine();
+            if(!value.isEmpty()) {
+                return value;
+            }
+            System.out.println("Value can not be empty!");
+        } while (true);
     }
-
 }
