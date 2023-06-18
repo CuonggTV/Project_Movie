@@ -36,20 +36,14 @@ public class MovieList extends ArrayList<Movie> {
         }
     }
 
-    public void writeToFile() {
-        try {
-            PrintWriter out = new PrintWriter(FILENAME);
-            Iterator loop = this.iterator();
+    public void writeToFile() throws FileNotFoundException {
+        PrintWriter out = new PrintWriter(FILENAME);
+        for(Movie mv : this){
+            out.println(mv.getMovieName()+", "+mv.getAuthor()+", "+mv.getShowTime());
+        }
+        out.flush();
+        out.close();
 
-            while(loop.hasNext()) {
-                Movie mv = (Movie)loop.next();
-                out.println(mv.getMovieName()+", "+mv.getAuthor()+", "+mv.getShowTime());
-            }
-            out.close();
-        }
-        catch (FileNotFoundException var4) {
-            Logger.getLogger(MovieList.class.getName()).log(Level.SEVERE, (String)null, var4);
-        }
 
     }
 

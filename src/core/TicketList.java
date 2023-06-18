@@ -32,20 +32,12 @@ public class TicketList extends ArrayList<Ticket>{
         }
     }
 
-    public void writeTicket(){
-        try{
-            PrintWriter out = new PrintWriter(FILENAME);
-            Iterator loop = this.iterator();
-
-            while(loop.hasNext()){
-                Ticket tk = (Ticket)loop.next();
-                out.println(tk.getMovieName()+", "+tk.getUserName()+", "+tk.getSeatNumber()+" ,"+tk.getShowTime());
-
-            }
-            out.close();
+    public void writeTicket() throws FileNotFoundException {
+        PrintWriter out = new PrintWriter(FILENAME);
+        for(Ticket tk : this){
+            out.println(tk.getMovieName()+", "+tk.getUserName()+", "+tk.getSeatNumber()+" ,"+tk.getShowTime());
         }
-        catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        out.flush();
+        out.close();
     }
 }
