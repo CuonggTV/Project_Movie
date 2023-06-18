@@ -25,8 +25,9 @@ public class UserList extends ArrayList<User> {
                 String username = row[0];
                 String password = row[1];
                 String fullName = row[2];
-                String email = row[3];
-                User user = new User(username, password, fullName, email);
+                String phoneNumber = row[3];
+                String email = row[4];
+                User user = new User(username, password, fullName, phoneNumber, email);
                 this.add(user);
             }
         } catch (IOException e) {
@@ -36,9 +37,9 @@ public class UserList extends ArrayList<User> {
 
     public void writeToFile() throws FileNotFoundException {
         PrintWriter out = new PrintWriter(FILENAME);
-        out.println("username, password, fullName, email");
+        out.println("username, password, fullName, phoneNumber, email");
         for (User user : this) {
-            out.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getFullName() + ", " + user.getEmail());
+            out.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getFullName() + ", " + user.getPhoneNumber() + ", " + user.getEmail());
         }
     }
 
@@ -46,7 +47,7 @@ public class UserList extends ArrayList<User> {
         String username = MyUtil.inputString("Enter your username: ");
         String password = MyUtil.inputString("Enter your password: ");
         for (User user : this) {
-            if (user.getUsername().equals(username) && user.getPasswork().equals(password)) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
             }
         }
@@ -81,8 +82,11 @@ public class UserList extends ArrayList<User> {
         do
         {
             phoneNumber = MyUtil.inputString("Input phone number:");
-            if(phoneNumber.length())
-        }
+            if(phoneNumber.length() != 10 || !phoneNumber.matches("[0-9]{10}"))
+            {
+                System.out.println("Please input correctly (10 digits)");
+            }
+        } while (phoneNumber.length() != 10 || !phoneNumber.matches("[0-9]{10}"));
 
         do
         {
@@ -105,4 +109,4 @@ public class UserList extends ArrayList<User> {
         System.out.println("Register successfully!");
     }
 
-}}
+}

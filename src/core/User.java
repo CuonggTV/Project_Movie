@@ -2,14 +2,14 @@ package core;
 
 public class User {
     private String username;
-    private String passwork;
+    private String password;
     private String fullName;
     private String phoneNumber;
     private String email;
 
-    public User(String username, String passwork, String fullName, String phoneNumber, String email) {
+    public User(String username, String password, String fullName, String phoneNumber, String email) {
         this.username = username;
-        this.passwork = passwork;
+        this.password = password;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -23,12 +23,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswork() {
-        return passwork;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswork(String passwork) {
-        this.passwork = passwork;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFullName() {
@@ -54,4 +54,5 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
