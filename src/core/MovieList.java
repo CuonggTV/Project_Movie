@@ -27,7 +27,8 @@ public class MovieList extends ArrayList<Movie> {
                 String movieName = row[0];
                 String author = row[1];
                 String showTime = row[2];
-                Movie movie = new Movie(movieName,author,showTime);
+                double price = Double.parseDouble(row[3]);
+                Movie movie = new Movie(movieName,author,showTime,price);
                 this.add(movie);
             }
         }
@@ -38,13 +39,12 @@ public class MovieList extends ArrayList<Movie> {
 
     public void writeToFile() throws FileNotFoundException {
         PrintWriter out = new PrintWriter(FILENAME);
+        out.println("Movie Name, Author, Show Time, Price");
         for(Movie mv : this){
-            out.println(mv.getMovieName()+", "+mv.getAuthor()+", "+mv.getShowTime());
+            out.println(mv.getMovieName()+", "+mv.getAuthor()+", "+mv.getShowTime()+", "+mv.getPrice());
         }
         out.flush();
         out.close();
-
-
     }
 
 }

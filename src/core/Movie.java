@@ -7,13 +7,16 @@ public class Movie {
     private String author;
     private String showTime;
 
+    private double price;
+
     public Movie() {
     }
 
-    public Movie(String movieName, String author, String showTime) {
+    public Movie(String movieName, String author, String showTime, double price) {
         this.movieName = movieName;
         this.author = author;
         this.showTime = showTime;
+        this.price = price;
     }
 
     public String getMovieName() {
@@ -38,5 +41,13 @@ public class Movie {
 
     public void setShowTime(String showTime) {
         this.showTime = showTime;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
