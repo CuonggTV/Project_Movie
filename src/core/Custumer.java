@@ -22,9 +22,14 @@ public class Custumer extends User{
     public double addMoney()
     {
         System.out.println("Your Money: " + wallet + " VND");
-        moneyAdd =
+        moneyAdd = MyUtil.inputDouble("How much money do you want to add?");
         wallet += moneyAdd;
         System.out.println("You have added " + moneyAdd + " VND");
         System.out.println("Your money: " + wallet + " VND");
+        return 0;
+    }
+
+    public static void main(String[] args) {
+
     }
 }
