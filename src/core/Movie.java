@@ -1,18 +1,19 @@
 package core;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Movie {
     private String movieName;
     private String author;
-    private String showTime;
-
     private double price;
+    private ArrayList<String> showTime;
+
 
     public Movie() {
     }
 
-    public Movie(String movieName, String author, String showTime, double price) {
+    public Movie(String movieName, String author, double price, ArrayList<String> showTime) {
         this.movieName = movieName;
         this.author = author;
         this.showTime = showTime;
@@ -35,11 +36,11 @@ public class Movie {
         this.author = author;
     }
 
-    public String getShowTime() {
+    public ArrayList<String> getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(String showTime) {
+    public void setShowTime(ArrayList<String> showTime) {
         this.showTime = showTime;
     }
 
@@ -49,5 +50,9 @@ public class Movie {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void addShowTime(String st){
+        showTime.add(st);
     }
 }

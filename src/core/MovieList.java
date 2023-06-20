@@ -2,6 +2,7 @@ package core;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +27,9 @@ public class MovieList extends ArrayList<Movie> {
                 String[] row = line.split(", ");
                 String movieName = row[0];
                 String author = row[1];
-                String showTime = row[2];
                 double price = Double.parseDouble(row[3]);
-                Movie movie = new Movie(movieName,author,showTime,price);
+                ArrayList<String> showTime = new ArrayList<>(Arrays.asList(row).subList(4, row.length-1));
+                Movie movie = new Movie(movieName,author,price,showTime);
                 this.add(movie);
             }
         }
@@ -40,8 +41,10 @@ public class MovieList extends ArrayList<Movie> {
     public void writeToFile() throws FileNotFoundException {
         PrintWriter out = new PrintWriter(FILENAME);
         out.println("Movie Name, Author, Show Time, Price");
-        for(Movie mv : this){
-            out.println(mv.getMovieName()+", "+mv.getAuthor()+", "+mv.getShowTime()+", "+mv.getPrice());
+        for(Movie mv : this) {
+            out.print(mv.getMovieName() + ", " + mv.getAuthor() + ", " + mv.getPrice());
+            String showtime = String.join(", ",mv.getShowTime());
+            out.println(showtime);
         }
         out.flush();
         out.close();

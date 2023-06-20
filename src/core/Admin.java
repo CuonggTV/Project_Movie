@@ -9,7 +9,8 @@ public class Admin extends User {
 
     public void createMovie(MovieList mv){
         boolean loop = false;
-        String movieName,author,showTime;
+        String movieName,author;
+        String[] showtime = new String[0];
         double price;
 
         do{
@@ -17,7 +18,6 @@ public class Admin extends User {
             System.out.flush();
             movieName = MyUtil.inputString("Enter movie name: ");
             author = MyUtil.inputString("Enter author: ");
-            showTime = MyUtil.inputString("Enter show time: ");
             price = MyUtil.inputDouble("Enter ticket price: ");
 
             //Check movie
@@ -33,8 +33,24 @@ public class Admin extends User {
                 loop = true;
                 System.out.println("Author just contains alphabet");
             }
+            //
         }while(loop);
-        Movie newMovie = new Movie(movieName,author,showTime,price);
+        Movie newMovie = new Movie(movieName,author,price,null);
         mv.add(newMovie);
+    }
+
+    public void setShowTime(MovieList mv){
+        int month = MyUtil.inputInterger("Enter month: ",1,12);
+        int day = switch (month) {
+            case 1, 3, 5, 7, 8, 10, 12 -> MyUtil.inputInterger("Enter day: ", 1, 31);
+            case 4, 6, 9, 11 -> MyUtil.inputInterger("Enter day: ", 1, 30);
+            case 2 -> MyUtil.inputInterger("Enter day: ", 1, 28);
+            default -> throw new IllegalStateException("Unexpected value: " + month);
+        };
+
+        int slot=MyUtil.inputInterger("Enter slot: ",1,4);
+
+        String st = Integer.toString(month)+"/"+Integer.toString(day)+"/"+Integer.toString(slot);
+
     }
 }

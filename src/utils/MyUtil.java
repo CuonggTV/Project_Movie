@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MyUtil {
@@ -29,6 +30,19 @@ public class MyUtil {
                 }
             }
             System.out.println("Value must be a number!");
+        } while (true);
+    }
+
+    public static Integer inputInterger(String message,int min, int max){
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.println(message);
+            int value = Integer.parseInt(sc.nextLine());
+
+            if(value >=min && value <= max) {
+                return value;
+            }
+            System.out.println("Value must be in range of " + min +" and "+max);
         } while (true);
     }
 }
