@@ -13,6 +13,9 @@ public class MovieList extends ArrayList<Movie> {
     }
 
     public void readMovie(){
+
+
+
         File file = new File(FILENAME);
         if(!file.exists()){
             System.out.println("File not exist.");
@@ -27,8 +30,12 @@ public class MovieList extends ArrayList<Movie> {
                 String[] row = line.split(", ");
                 String movieName = row[0];
                 String author = row[1];
-                double price = Double.parseDouble(row[3]);
-                ArrayList<String> showTime = new ArrayList<>(Arrays.asList(row).subList(4, row.length-1));
+                double price = Double.parseDouble(row[2]);
+                ArrayList<String> showTime;
+                if(row.length-1==3){
+                    showTime = new ArrayList<>(Arrays.asList(row).subList(4, row.length-1));
+                }
+                else showTime = null;
                 Movie movie = new Movie(movieName,author,price,showTime);
                 this.add(movie);
             }
@@ -40,11 +47,13 @@ public class MovieList extends ArrayList<Movie> {
 
     public void writeToFile() throws FileNotFoundException {
         PrintWriter out = new PrintWriter(FILENAME);
-        out.println("Movie Name, Author, Show Time, Price");
+        out.println("Movie Name, Author, Price, Show Time");
         for(Movie mv : this) {
             out.print(mv.getMovieName() + ", " + mv.getAuthor() + ", " + mv.getPrice());
-            String showtime = String.join(", ",mv.getShowTime());
-            out.println(showtime);
+            if(mv.getShowTime()!=null){
+                String showtime = String.join(", ",mv.getShowTime());
+                out.println(showtime);
+            }
         }
         out.flush();
         out.close();

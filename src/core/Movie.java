@@ -13,11 +13,17 @@ public class Movie {
     public Movie() {
     }
 
+    public Movie(String movieName, String author, double price) {
+        this.movieName = movieName;
+        this.author = author;
+        this.price = price;
+    }
+
     public Movie(String movieName, String author, double price, ArrayList<String> showTime) {
         this.movieName = movieName;
         this.author = author;
-        this.showTime = showTime;
         this.price = price;
+        this.showTime = showTime;
     }
 
     public String getMovieName() {

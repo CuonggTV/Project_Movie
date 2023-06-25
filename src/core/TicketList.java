@@ -34,7 +34,7 @@ public class TicketList extends ArrayList<Ticket>{
 
     public void writeTicket() throws FileNotFoundException {
         PrintWriter out = new PrintWriter(FILENAME);
-        out.println("Movie Name, Username, Seat Number. Show Time");
+        out.println("Movie Name, Username, Seat Number, Show Time");
         for(Ticket tk : this){
             out.println(tk.getMovieName()+", "+tk.getUserName()+", "+tk.getSeatNumber()+" ,"+tk.getShowTime());
         }
