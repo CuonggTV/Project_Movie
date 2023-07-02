@@ -61,7 +61,6 @@ public class Admin  {
             }
         }while (choice!=6);
     }
-
     public void deleteMovie(MovieList movieList){
         int mvPostion = movieList.findMoviePosition();
         movieList.remove(mvPostion);
