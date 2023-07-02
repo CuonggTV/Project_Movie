@@ -7,6 +7,9 @@ public class User {
     private String phoneNumber;
     private String email;
 
+    double wallet = 0;
+    double moneyAdd;
+
     public User(String username, String password, String fullName, String phoneNumber, String email) {
         this.username = username;
         this.password = password;

@@ -1,11 +1,10 @@
 package core;
 
+import utils.MyUtil;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MovieList extends ArrayList<Movie> {
     private static final String FILENAME = "src\\data\\MovieData.txt";
@@ -13,9 +12,6 @@ public class MovieList extends ArrayList<Movie> {
     }
 
     public void readMovie(){
-
-
-
         File file = new File(FILENAME);
         if(!file.exists()){
             System.out.println("File not exist.");
@@ -31,9 +27,12 @@ public class MovieList extends ArrayList<Movie> {
                 String movieName = row[0];
                 String author = row[1];
                 double price = Double.parseDouble(row[2]);
-                ArrayList<String> showTime;
+                ArrayList<String> showTime = new ArrayList<>();
                 if(row.length-1==3){
-                    showTime = new ArrayList<>(Arrays.asList(row).subList(4, row.length-1));
+                    for(int i = 3;i< row.length;i++){
+                        showTime.add(row[i]);
+                    }
+                    //showTime = new ArrayList<>(Arrays.asList(row).subList(4, row.length-1));
                 }
                 else showTime = null;
                 Movie movie = new Movie(movieName,author,price,showTime);
@@ -51,12 +50,51 @@ public class MovieList extends ArrayList<Movie> {
         for(Movie mv : this) {
             out.print(mv.getMovieName() + ", " + mv.getAuthor() + ", " + mv.getPrice());
             if(mv.getShowTime()!=null){
-                String showtime = String.join(", ",mv.getShowTime());
-                out.println(showtime);
+                for (int i=0;i<mv.getShowTime().size();i++){
+                    out.print(", ");
+                    out.print(mv.getShowTime().get(i));
+                }
+                out.println();
             }
+            else out.println();
         }
         out.flush();
         out.close();
     }
 
+    public int findMoviePosition(){
+        int mvPostion;
+        do {
+            System.out.flush();
+            String newMv = MyUtil.inputString("Enter the movie name: ");
+            mvPostion = -1;
+            for (int i = 0; i < this.size(); i++) {
+                if (newMv.equals(this.get(i).getMovieName())) {
+                    mvPostion = i;
+                    break;
+                }
+            }
+
+            if (mvPostion == -1) {
+                if(!MyUtil.continueAfterWrongInput("We don't have this movie yet.")){
+                    return -1;
+                }
+            }
+        } while (mvPostion==-1);
+
+        return mvPostion;
+    }
+
+    public void showMovieInfo(int mvPostion){
+        System.out.println("--------------------------------------------------");
+        System.out.println("|Movie name: "+this.get(mvPostion).getMovieName());
+        System.out.println("|Author: "+this.get(mvPostion).getAuthor());
+        System.out.println("|Price: "+this.get(mvPostion).getPrice());
+        System.out.println("|Showtime: ");
+        for (int i=0;i<this.get(mvPostion).getShowTime().size();i++){
+            System.out.println("\t"+i+". "+this.get(mvPostion).getShowTime().get(i));
+        }
+        System.out.println("--------------------------------------------------\n");
+
+    }
 }

@@ -1,18 +1,20 @@
 package core;
 
+import java.util.ArrayList;
+
 public class Ticket {
     private String movieName;
     private String userName;
-    private String seatNumber;
+    private ArrayList<Integer> seatOrdered = new ArrayList<>();
     private String showTime;
 
     public Ticket() {
     }
 
-    public Ticket(String movieName, String userName, String seatNumber, String showTime) {
+    public Ticket(String movieName, String userName,String showTime,ArrayList<Integer> seatOrdered) {
         this.movieName = movieName;
         this.userName = userName;
-        this.seatNumber = seatNumber;
+        this.seatOrdered = seatOrdered;
         this.showTime = showTime;
     }
 
@@ -32,14 +34,17 @@ public class Ticket {
         this.userName = userName;
     }
 
-    public String getSeatNumber() {
-        return seatNumber;
+    public ArrayList<Integer> getSeatOrdered() {
+        return seatOrdered;
     }
 
-    public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber;
+    public void setSeatOrdered(ArrayList<Integer> seatOrdered) {
+        this.seatOrdered = seatOrdered;
     }
 
+    public void addSeatOrdered(){
+
+    }
     public String getShowTime() {
         return showTime;
     }

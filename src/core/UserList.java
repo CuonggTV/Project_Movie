@@ -56,11 +56,11 @@ public class UserList extends ArrayList<User> {
         }
         return null;
     }
-    public void register() {
+    public User register() {
 //        do yourself
         String username;
-        String passwork;
-        String fullname;
+        String password;
+        String fullName;
         String email;
         String phoneNumber;
         do
@@ -74,13 +74,13 @@ public class UserList extends ArrayList<User> {
 
         do
         {
-            passwork = MyUtil.inputString("Input PassWork: ");
-            if (!passwork.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}\\[\\]|:;\"'<>,.?/~`]).{8,}$"))
+            password = MyUtil.inputString("Input PassWork: ");
+            if (!password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}\\[\\]|:;\"'<>,.?/~`]).{8,}$"))
             {
                 System.out.println("Password must be at least 8 characters long and contain at least one letter, one number, and one special character. Please try again.");
 
             }
-        } while (!passwork.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}\\[\\]|:;\"'<>,.?/~`]).{8,}$"));
+        } while (!password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}\\[\\]|:;\"'<>,.?/~`]).{8,}$"));
 
         do
         {
@@ -93,12 +93,12 @@ public class UserList extends ArrayList<User> {
 
         do
         {
-            fullname = MyUtil.inputString("Input FullName: ");
-            if(fullname.length() > 30)
+            fullName = MyUtil.inputString("Input FullName: ");
+            if(fullName.length() > 30)
             {
                 System.out.println("Maximum 30 characters!!!");
             }
-        } while (fullname.length() > 30);
+        } while (fullName.length() > 30);
         do
         {
             email = MyUtil.inputString("Input Email: ");
@@ -107,9 +107,12 @@ public class UserList extends ArrayList<User> {
                 System.out.println("Invalid email address. Please enter an email address from the gamil.com domain.");
             }
         } while (!email.matches("^[A-Za-z0-9+_.-]+@gmail.com$"));
-        User newuser = new User(username, passwork, fullname, phoneNumber, email);
+        User newuser = new User(username, password, fullName, phoneNumber, email);
         this.add(newuser);
         System.out.println("Register successfully!");
+        return newuser;
     }
+
+
 
 }
