@@ -39,9 +39,9 @@ public class TicketList extends ArrayList<Ticket>{
         PrintWriter out = new PrintWriter(FILENAME);
         out.println("Movie Name, Username, Show Time, Seat Number");
         for(Ticket tk : this){
-            out.print(tk.getMovieName()+", "+tk.getUserName()+" ,"+tk.getShowTime());
+            out.print(tk.getMovieName()+", "+tk.getUserName()+", "+tk.getShowTime());
             for(int i =0;i<tk.getSeatOrdered().size();i++){
-                out.print(" ," + tk.getSeatOrdered().get(i));
+                out.print(", " + tk.getSeatOrdered().get(i));
             }
             System.out.println();
         }
@@ -70,7 +70,7 @@ public class TicketList extends ArrayList<Ticket>{
             System.out.print(i + " ");
         }
         System.out.println();
-        for (int i = 1; i <= 18; i++) {
+        for (int i = 1; i <= 20; i++) {
             System.out.print("_");
         }
         System.out.println();

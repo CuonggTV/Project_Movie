@@ -86,15 +86,21 @@ public class MovieList extends ArrayList<Movie> {
     }
 
     public void showMovieInfo(int mvPostion){
-        System.out.println("--------------------------------------------------");
+        System.out.println("\n--------------------------------------------------");
         System.out.println("|Movie name: "+this.get(mvPostion).getMovieName());
         System.out.println("|Author: "+this.get(mvPostion).getAuthor());
         System.out.println("|Price: "+this.get(mvPostion).getPrice());
         System.out.println("|Showtime: ");
         for (int i=0;i<this.get(mvPostion).getShowTime().size();i++){
-            System.out.println("\t"+i+". "+this.get(mvPostion).getShowTime().get(i));
+            System.out.println("|\tSlot "+(i+1)+": "+this.get(mvPostion).getShowTime().get(i));
         }
         System.out.println("--------------------------------------------------\n");
 
+    }
+
+    public void showAllMoviesInfo(){
+        for(int i=0;i<this.size();i++){
+            showMovieInfo(i);
+        }
     }
 }

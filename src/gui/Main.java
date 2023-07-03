@@ -35,13 +35,15 @@ public class Main {
                 case 2 -> {
                     AdminUI adminUI = new AdminUI();
                     if(adminUI.enterPassword()){
-                        adminUI.AdminMainUI(movieList);
+                        adminUI.AdminMainUI(movieList,ticketList,userList);
                     }
                 }
-
             }
         }while(choice!=3);
+
+        userList.writeToFile();
         movieList.writeToFile();
+        ticketList.writeTicket();
     }
 
 

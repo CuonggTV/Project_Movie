@@ -43,8 +43,7 @@ public class Admin  {
             System.out.println("3. Update price");
             System.out.println("4. Update showtime");
             System.out.println("5. Delete showtime");
-            System.out.println("6. Delete movie");
-            System.out.println("7. Never mind");
+            System.out.println("6. Never mind");
             choice = MyUtil.inputInterger("Your choice: ",1,6);
 
             System.out.flush();
@@ -61,8 +60,26 @@ public class Admin  {
             }
         }while (choice!=6);
     }
-    public void deleteMovie(MovieList movieList){
+    public void deleteMovie(MovieList movieList, TicketList ticketList,UserList userList){
         int mvPostion = movieList.findMoviePosition();
+        //Refund cho ng dung
+
+        //Xoa ticket
+        for(int i=0;i<ticketList.size();i++){
+            if(ticketList.get(i).getMovieName().equals(movieList.get(mvPostion).getMovieName())){
+                //Refund cho ng dung
+                for(int j=0;i<userList.size();i++){
+                    if(ticketList.get(i).getUserName().equals(userList.get(j).getUsername())){
+                        double pricePerTicket = movieList.get(mvPostion).getPrice();
+                        double seatOrdered = ticketList.get(mvPostion).getSeatOrdered().size();
+                        userList.get(j).setWallet(userList.get(j).getWallet() + pricePerTicket * seatOrdered);
+                        break;
+                    }
+                }
+                ticketList.remove(i);
+                i--;
+            }
+        }
         movieList.remove(mvPostion);
     }
 }

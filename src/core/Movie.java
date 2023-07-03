@@ -82,8 +82,8 @@ public class Movie {
     }
 
     public void changeShowtime(){
-        int timeChoice = MyUtil.inputInterger("Choose your time: ",0,this.getShowTime().size()-1);
-        String date = MyUtil.inputDate();
+        int timeChoice = MyUtil.inputInterger("Choose your time: ",1,this.getShowTime().size());
+        String date = this.getShowTime().get(timeChoice-1);
         if(date ==null) return;
 
         //Check xem đã có date này chưa
@@ -91,7 +91,7 @@ public class Movie {
         //ko thì quay lại
         for (int i=0;i<showTime.size();i++){
             if(showTime.get(i).equals(date)){
-                int slot = MyUtil.inputInterger("Enter slot: ", 1, 4);
+                int slot = MyUtil.inputInterger("Enter new slot: ", 1, 4);
                 date += "/"+Integer.toString(slot);
                 showTime.set(i,date);
                 return;
@@ -99,8 +99,5 @@ public class Movie {
         }
         System.out.println("This time is unscheduled");
         changeShowtime();
-    }
-    public void removeShowTime(int pos){
-        showTime.remove(pos);
     }
 }
