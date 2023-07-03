@@ -1,51 +1,64 @@
 package core;
 
-
 import utils.MyUtil;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Customer extends User{
-
-    public Customer(String username, String password, String fullName, String phoneNumber, String email) {
-        super(username, password, fullName, phoneNumber, email);
+    public Customer(String username, String password, String fullName, String phoneNumber, String email,double wallet) {
+        super(username, password, fullName, phoneNumber, email,wallet);
     }
 
-    public void showInfo()
+    public void showInfo(UserList userList)
     {
-        System.out.println("Full Name: " + this.getFullName());
-        System.out.println("Phone Number: " + this.getPhoneNumber());
-        System.out.println("Email: " + this.getEmail());
+        int pos = userList.findUserPosition(getUsername());
+        System.out.println("Username: " + userList.get(pos).getUsername());
+        System.out.println("Full Name: " + userList.get(pos).getFullName());
+        System.out.println("Phone Number: " + userList.get(pos).getPhoneNumber());
+        System.out.println("Email: " + userList.get(pos).getEmail());
+        System.out.println("Wallet: " + userList.get(pos).getWallet());
     }
 
-    public void addMoney()
-    {
-        System.out.println("Your Money: " + wallet + " VND");
-        moneyAdd = MyUtil.inputDouble("How much money do you want to add?",0);
-        wallet += moneyAdd;
-        System.out.println("You have added " + moneyAdd + " VND");
-        System.out.println("Your money: " + wallet + " VND");
-    }
-    private int chooseMovieAndSlot(MovieList movieList,String movieName,String slot){
+    private int chooseMovieAndSlot(MovieList movieList){
         int mvPosition =movieList.findMoviePosition();
         if(mvPosition==-1) return mvPosition;
         for(String x: movieList.get(mvPosition).getShowTime()){
             System.out.println(x);
         }
-        int slotChosen = MyUtil.inputInterger("Choose slot: ",1,movieList.get(mvPosition).getShowTime().size());
 
-        movieName = movieList.get(mvPosition).getMovieName();
-        slot = movieList.get(mvPosition).getShowTime().get(slotChosen);
         return mvPosition;
     }
 
+    public void updateCustomer(UserList userList){
+        int pos = userList.findUserPosition(getUsername());
+        int choice;
+        do{
+            System.out.flush();
+            System.out.println("1. Update username");
+            System.out.println("2. Update password");
+            System.out.println("3. Update full name");
+            System.out.println("4. Update phone number");
+            System.out.println("5. Update email");
+            System.out.println("6. Add money");
+            System.out.println("7. Never mind");
+            choice = MyUtil.inputInteger("Your choice: ",1,7);
+
+            System.out.flush();
+            switch (choice) {
+                case 1 -> userList.get(pos).setUsername();
+                case 2 -> userList.get(pos).setPassword();
+                case 3 -> userList.get(pos).setFullName();
+                case 4 -> userList.get(pos).setPhoneNumber();
+                case 5 -> userList.get(pos).setEmail();
+                case 6 -> userList.get(pos).addMoney();
+            }
+        }while (choice!=7);
+    }
 
     private ArrayList<Integer> chooseSeat(int [][]a){
-        Scanner sc= new Scanner(System.in);
         ArrayList<Integer> ticketBought = new ArrayList<>();
         do{
-            String []seatNum= sc.nextLine().split(" ");
+            String input = MyUtil.inputString("Choose your seat (row column, ex: 11): ");
+            String []seatNum= input.split(" ");
             try{
                 for (String s : seatNum) {
                     int tkResult = Integer.parseInt(s);
@@ -72,20 +85,39 @@ public class Customer extends User{
             }
             break;
         }while(true);
-        System.out.println("Bought successfully!");
         return ticketBought;
     }
 
     public void buyTicket(MovieList movieList, TicketList ticketList){
         //Choose movie
-        String movieName="",slot="";
-        int mvPostion = chooseMovieAndSlot(movieList,movieName,slot);
-        if(mvPostion==-1) return;
+        String movieName,slot;
+        int mvPosition = chooseMovieAndSlot(movieList);
+        if(mvPosition==-1) return;
+        movieName = movieList.get(mvPosition).getMovieName();
+        int slotChosen = MyUtil.inputInteger("Choose slot: ",1,movieList.get(mvPosition).getShowTime().size());
+        slot = movieList.get(mvPosition).getShowTime().get(slotChosen-1);
+        double price = movieList.get(mvPosition).getPrice();
 
         //Show seats and choose seats
         int[][] a = ticketList.showAndReturn_SeatsMap(movieName,slot);
+        System.out.println("Price per ticket: "+price);
         ArrayList<Integer> ticketBought = chooseSeat(a);
         if(ticketBought==null) return;
+
+        //Thanh toan ve
+        if(getWallet() < price){
+            System.out.println("You don't have enough money!");
+            return;
+        }
+        else{
+            System.out.println("Total price: "+price*ticketBought.size());
+            System.out.println("Your wallet: "+getWallet());
+            if(!MyUtil.continueAfterWrongInput("You want to pay?")){
+                return;
+            }
+            wallet-=price*ticketBought.size();
+            System.out.println("Bought successfully!");
+        }
 
 
         //TH dat them ticket
@@ -104,10 +136,20 @@ public class Customer extends User{
         Ticket newTicket = new Ticket(movieName,getUsername(),slot,ticketBought);
         ticketList.add(newTicket);
     }
-    public void deleteUser(UserList userList){
+    public void deleteUser(UserList userList,TicketList ticketList){
+        //Xoa ve da mua
+        for(int i=0;i<ticketList.size();i++){
+            if(ticketList.get(i).getUserName().equals(getUsername())){
+                ticketList.remove(i);
+                i--;
+            }
+        }
+
+        //Xoa ng dung
         for (int i=0;i<userList.size();i++){
             if(userList.get(i).getUsername().equals(getUsername())){
                 userList.remove(i);
+                i--;
             }
         }
     }

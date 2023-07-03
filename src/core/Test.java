@@ -2,7 +2,6 @@ package core;
 
 import utils.MyUtil;
 
-import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,7 +22,7 @@ public class Test {
         for (String s : ROLE) {
             System.out.println(s);
         }
-        int choice = MyUtil.inputInterger("Who are you?", 1, 2);
+        int choice = MyUtil.inputInteger("Who are you?", 1, 2);
         if (choice == 1)
         {
             System.out.println("Let me know more about you!");

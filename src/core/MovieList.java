@@ -29,10 +29,10 @@ public class MovieList extends ArrayList<Movie> {
                 double price = Double.parseDouble(row[2]);
                 ArrayList<String> showTime = new ArrayList<>();
                 if(row.length-1==3){
-                    for(int i = 3;i< row.length;i++){
+                    for(int i = 3;i<row.length;i++){
                         showTime.add(row[i]);
                     }
-                    //showTime = new ArrayList<>(Arrays.asList(row).subList(4, row.length-1));
+                    //showTime = new ArrayList<>(Arrays.asList(row).subList(3, row.length-1));
                 }
                 else showTime = null;
                 Movie movie = new Movie(movieName,author,price,showTime);
@@ -63,38 +63,59 @@ public class MovieList extends ArrayList<Movie> {
     }
 
     public int findMoviePosition(){
-        int mvPostion;
+        int mvPosition;
         do {
             System.out.flush();
             String newMv = MyUtil.inputString("Enter the movie name: ");
-            mvPostion = -1;
+            mvPosition = -1;
             for (int i = 0; i < this.size(); i++) {
                 if (newMv.equals(this.get(i).getMovieName())) {
-                    mvPostion = i;
+                    mvPosition = i;
                     break;
                 }
             }
 
-            if (mvPostion == -1) {
+            if (mvPosition == -1) {
                 if(!MyUtil.continueAfterWrongInput("We don't have this movie yet.")){
                     return -1;
                 }
             }
-        } while (mvPostion==-1);
+        } while (mvPosition==-1);
 
-        return mvPostion;
+        return mvPosition;
     }
 
-    public void showMovieInfo(int mvPostion){
-        System.out.println("--------------------------------------------------");
-        System.out.println("|Movie name: "+this.get(mvPostion).getMovieName());
-        System.out.println("|Author: "+this.get(mvPostion).getAuthor());
-        System.out.println("|Price: "+this.get(mvPostion).getPrice());
+    public void showMovieInfo(int mvPosition){
+        System.out.println("\n--------------------------------------------------");
+        System.out.println("|Movie name: "+this.get(mvPosition).getMovieName());
+        System.out.println("|Author: "+this.get(mvPosition).getAuthor());
+        System.out.println("|Price: "+this.get(mvPosition).getPrice());
         System.out.println("|Showtime: ");
-        for (int i=0;i<this.get(mvPostion).getShowTime().size();i++){
-            System.out.println("\t"+i+". "+this.get(mvPostion).getShowTime().get(i));
+        //System.out.println(this.get(mvPosition).getShowTime().isEmpty());
+        if (this.get(mvPosition).getShowTime() != null){
+            for (int i=0;i<this.get(mvPosition).getShowTime().size();i++){
+                String showTime = this.get(mvPosition).getShowTime().get(i);
+                String []elements = showTime.split("/");
+
+                System.out.print("|\tOn "+elements[0]+"/"+elements[1]+": ");
+                switch (elements[2]){
+                    case "1" -> System.out.println("7:00 - 9:00");
+                    case "2" -> System.out.println("10:00 - 12:00");
+                    case "3" -> System.out.println("13:00 - 15:00");
+                    case "4" -> System.out.println("16:00 - 18:00");
+                    case "5" -> System.out.println("19:00 - 21:00");
+                }
+            }
         }
         System.out.println("--------------------------------------------------\n");
 
     }
+
+    public void showAllMoviesInfo(){
+        for(int i=0;i<this.size();i++){
+            showMovieInfo(i);
+        }
+    }
+
+
 }

@@ -6,8 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class UserList extends ArrayList<User> {
-
-    private static final String FILENAME = "src\\data\\user.txt";
+    private static final String FILENAME = "src\\data\\UserData.txt";
 
     public void readFromFile() {
         BufferedReader reader;
@@ -27,7 +26,8 @@ public class UserList extends ArrayList<User> {
                 String fullName = row[2];
                 String phoneNumber = row[3];
                 String email = row[4];
-                User user = new User(username, password, fullName, phoneNumber, email);
+                double wallet = Double.parseDouble(row[5]);
+                User user = new User(username, password, fullName, phoneNumber, email, wallet);
                 this.add(user);
             }
         } catch (IOException e) {
@@ -38,9 +38,9 @@ public class UserList extends ArrayList<User> {
     public void writeToFile() throws FileNotFoundException {
         File file = new File(FILENAME);
         PrintWriter out = new PrintWriter(file);
-        out.println("username, password, fullName, phoneNumber, email");
+        out.println("Username, Password, Full name, PhoneNumber, Email, Wallet");
         for (User user : this) {
-            out.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getFullName() + ", " + user.getPhoneNumber() + ", " + user.getEmail());
+            out.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getFullName() + ", " + user.getPhoneNumber() + ", " + user.getEmail()+", "+user.wallet);
         }
         out.flush();
         out.close();
@@ -51,68 +51,33 @@ public class UserList extends ArrayList<User> {
         String password = MyUtil.inputString("Enter your password: ");
         for (User user : this) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                System.out.println("Login successfully");
                 return user;
             }
         }
+        System.out.println("Your username or password is wrong.");
         return null;
     }
     public User register() {
-//        do yourself
-        String username;
-        String password;
-        String fullName;
-        String email;
-        String phoneNumber;
-        do
-        {
-            username = MyUtil.inputString("Input UserName: ");
-            if (username.length() > 30)
-            {
-                System.out.println("Invalid username. Please enter a username that is 30 characters or fewer.");
-            }
-        } while (username.length() > 30);
+        User newUser = new User();
 
-        do
-        {
-            password = MyUtil.inputString("Input PassWork: ");
-            if (!password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}\\[\\]|:;\"'<>,.?/~`]).{8,}$"))
-            {
-                System.out.println("Password must be at least 8 characters long and contain at least one letter, one number, and one special character. Please try again.");
+        newUser.setFullName();
+        newUser.setPassword();
+        newUser.setFullName();
+        newUser.setPhoneNumber();
+        newUser.setEmail();
 
-            }
-        } while (!password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}\\[\\]|:;\"'<>,.?/~`]).{8,}$"));
-
-        do
-        {
-            phoneNumber = MyUtil.inputString("Input phone number:");
-            if(phoneNumber.length() != 10 || !phoneNumber.matches("[0-9]{10}"))
-            {
-                System.out.println("Please input correctly (10 digits)");
-            }
-        } while (phoneNumber.length() != 10 || !phoneNumber.matches("[0-9]{10}"));
-
-        do
-        {
-            fullName = MyUtil.inputString("Input FullName: ");
-            if(fullName.length() > 30)
-            {
-                System.out.println("Maximum 30 characters!!!");
-            }
-        } while (fullName.length() > 30);
-        do
-        {
-            email = MyUtil.inputString("Input Email: ");
-            if (!email.matches("^[A-Za-z0-9+_.-]+@gmail.com$"))
-            {
-                System.out.println("Invalid email address. Please enter an email address from the gamil.com domain.");
-            }
-        } while (!email.matches("^[A-Za-z0-9+_.-]+@gmail.com$"));
-        User newuser = new User(username, password, fullName, phoneNumber, email);
-        this.add(newuser);
+        this.add(newUser);
         System.out.println("Register successfully!");
-        return newuser;
+        return newUser;
     }
 
-
-
+    public int findUserPosition(String username){
+        for(int i=0;i<this.size();i++){
+            if (this.get(i).getUsername().equals(username)){
+                return i;
+            }
+        }
+        return -1;
+    }
 }

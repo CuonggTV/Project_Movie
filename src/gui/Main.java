@@ -26,7 +26,7 @@ public class Main {
             System.out.println("2. Log in as Admin");
             System.out.println("3. Exit");
             System.out.println("====================");
-            choice = MyUtil.inputInterger("Your choice: ",1,3);
+            choice = MyUtil.inputInteger("Your choice: ",1,3);
             switch (choice){
                 case 1 -> {
                     CustomerUI customerUI = new CustomerUI();
@@ -35,13 +35,15 @@ public class Main {
                 case 2 -> {
                     AdminUI adminUI = new AdminUI();
                     if(adminUI.enterPassword()){
-                        adminUI.AdminMainUI(movieList);
+                        adminUI.AdminMainUI(movieList,ticketList,userList);
                     }
                 }
-
             }
         }while(choice!=3);
+
+        userList.writeToFile();
         movieList.writeToFile();
+        ticketList.writeTicket();
     }
 
 

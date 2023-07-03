@@ -1,5 +1,4 @@
 package utils;
-
 import java.util.Scanner;
 
 public class MyUtil {
@@ -26,11 +25,18 @@ public class MyUtil {
         } while (true);
     }
 
-    public static Integer inputInterger(String message, int min, int max) {
+    public static Integer inputInteger(String message, int min, int max) {
         Scanner sc = new Scanner(System.in);
         do {
             System.out.println(message);
-            int value = Integer.parseInt(sc.nextLine());
+            int value;
+            try{
+                value = Integer.parseInt(sc.nextLine());
+            }
+            catch (NumberFormatException e){
+                System.out.println("Value must be a number");
+                continue;
+            }
             if (value >= min && value <= max) {
                 return value;
             }
@@ -47,15 +53,16 @@ public class MyUtil {
         return choice.equals("1");
     }
 
+
     public static String inputDate(){
         int month,day;
         do{
             System.out.flush();
-            month = MyUtil.inputInterger("Enter month: ", 1, 12);
+            month = MyUtil.inputInteger("Enter month: ", 1, 12);
             day = switch (month) {
-                case 1, 3, 5, 7, 8, 10, 12 -> MyUtil.inputInterger("Enter day: ", 1, 31);
-                case 4, 6, 9, 11 -> MyUtil.inputInterger("Enter day: ", 1, 30);
-                case 2 -> MyUtil.inputInterger("Enter day: ", 1, 28);
+                case 1, 3, 5, 7, 8, 10, 12 -> MyUtil.inputInteger("Enter day: ", 1, 31);
+                case 4, 6, 9, 11 -> MyUtil.inputInteger("Enter day: ", 1, 30);
+                case 2 -> MyUtil.inputInteger("Enter day: ", 1, 28);
                 default -> -1;
             };
             if(day==-1){
@@ -64,6 +71,6 @@ public class MyUtil {
                 }
             }
         }while(day==-1);
-        return  Integer.toString(day) + "/" + Integer.toString(month);
+        return  day + "/" +month;
     }
 }
