@@ -2,18 +2,12 @@ package core;
 
 import utils.MyUtil;
 
-import java.util.Scanner;
-
 public class Admin  {
     public static String PASSWORD = "12345";
     public Admin() {
     }
 
     public void createMovie(MovieList mv){
-        boolean loop = false;
-        String movieName,author;
-        String[] showtime = new String[0];
-        double price;
         Movie newMovie = new Movie();
         newMovie.setMovieName(mv);
         newMovie.setAuthor();
@@ -32,7 +26,6 @@ public class Admin  {
         int mvPostion = movieList.findMoviePosition();
         if(mvPostion==-1) return;
         //Tim
-        Scanner sc = new Scanner(System.in);
         int choice;
         do{
             System.out.flush();
@@ -53,7 +46,7 @@ public class Admin  {
                 case 3 -> movieList.get(mvPostion).setPrice(MyUtil.inputDouble("New price: ", 0));
                 case 4 -> movieList.get(mvPostion).changeShowtime();
                 case 5 -> {
-                    int slotToRemove = MyUtil.inputInterger("Choose movie slot to remove: ",
+                    int slotToRemove = MyUtil.inputInteger("Choose movie slot to remove: ",
                             0, movieList.get(mvPostion).getShowTime().size() - 1);
                     movieList.get(mvPostion).getShowTime().remove(slotToRemove);
                 }

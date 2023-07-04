@@ -19,6 +19,9 @@ public class Main {
         userList.readFromFile();
         ticketList.readTicket();
 
+        //Delete outdated source
+        movieList.deleteOutdatedShowTime();
+
         do{
             System.out.flush();
             System.out.println("====================");

@@ -73,9 +73,14 @@ public class Movie {
         do{
             String date = MyUtil.inputDate();
             if(date == null) return;
-            int slot = MyUtil.inputInteger("Enter slot: ", 1, 4);
+            int slot = MyUtil.inputInteger("Enter slot: ", 1, 5);
             result = date+ "/" + slot;
-        }while (checkTimeAgainstCurrentTime(result));
+            if (!checkTimeAgainstCurrentTime(result)){
+                System.out.println("This time is outdated!");
+                continue;
+            }
+            break;
+        }while (true);
         this.showTime.add(result);
     }
 
@@ -107,7 +112,7 @@ public class Movie {
         changeShowtime();
     }
 
-    public static boolean checkTimeAgainstCurrentTime(String time){
+    public boolean checkTimeAgainstCurrentTime(String time){
         String []elements = time.split("/");
         int day = Integer.parseInt(elements[0]);
         int month = Integer.parseInt(elements[1]);

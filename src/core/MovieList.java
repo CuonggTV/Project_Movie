@@ -117,5 +117,15 @@ public class MovieList extends ArrayList<Movie> {
         }
     }
 
-
+    public void deleteOutdatedShowTime(){
+        for (int i=0;i<this.size();i++){
+            if(this.get(i).getShowTime()!=null){
+                for (int j=0;i<this.get(i).getShowTime().size();i++){
+                    if (!this.get(i).checkTimeAgainstCurrentTime(this.get(i).getShowTime().get(j))){
+                        this.get(i).getShowTime().remove(j);
+                    }
+                }
+            }
+        }
+    }
 }

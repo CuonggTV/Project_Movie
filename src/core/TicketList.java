@@ -63,7 +63,6 @@ public class TicketList extends ArrayList<Ticket>{
 
             }
         }
-
         //Show seat
         System.out.print(" | ");
         for (int i = 1; i <= 9; i++) {
@@ -83,6 +82,12 @@ public class TicketList extends ArrayList<Ticket>{
             System.out.println();
         }
         return a;
+    }
+
+    public void showTicket(int username){
+        for(Ticket ticket: this){
+
+        }
     }
 
 }

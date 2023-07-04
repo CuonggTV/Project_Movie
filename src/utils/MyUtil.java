@@ -16,7 +16,14 @@ public class MyUtil {
         Scanner sc = new Scanner(System.in);
         do {
             System.out.println(message);
-            double value = Double.parseDouble(sc.nextLine());
+            double value;
+            try{
+                value =Double.parseDouble(sc.nextLine());
+            }
+            catch (NumberFormatException e){
+                System.out.println("Value must be a number");
+                continue;
+            }
 
             if (value >= min) {
                 return value;
