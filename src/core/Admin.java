@@ -2,12 +2,18 @@ package core;
 
 import utils.MyUtil;
 
+import java.util.Scanner;
+
 public class Admin  {
     public static String PASSWORD = "12345";
     public Admin() {
     }
 
     public void createMovie(MovieList mv){
+        boolean loop = false;
+        String movieName,author;
+        String[] showtime = new String[0];
+        double price;
         Movie newMovie = new Movie();
         newMovie.setMovieName(mv);
         newMovie.setAuthor();
@@ -16,20 +22,21 @@ public class Admin  {
     }
 
     public void addShowTime(MovieList movieList) {
-        int mvPosition = movieList.findMoviePosition();
-        if(mvPosition==-1) return;
-        movieList.get(mvPosition).setShowTime();
+        int mvPostion = movieList.findMoviePosition();
+        if(mvPostion==-1) return;
+        movieList.get(mvPostion).setShowTime();
     }
 
     public void updateMovie(MovieList movieList){
         //Find film
-        int mvPosition = movieList.findMoviePosition();
-        if(mvPosition==-1) return;
+        int mvPostion = movieList.findMoviePosition();
+        if(mvPostion==-1) return;
         //Tim
+        Scanner sc = new Scanner(System.in);
         int choice;
         do{
             System.out.flush();
-            movieList.showMovieInfo(mvPosition);
+            movieList.showMovieInfo(mvPostion);
 
             System.out.println("1. Update movie name");
             System.out.println("2. Update author");
@@ -41,14 +48,14 @@ public class Admin  {
 
             System.out.flush();
             switch (choice) {
-                case 1 -> movieList.get(mvPosition).setMovieName(movieList);
-                case 2 -> movieList.get(mvPosition).setAuthor();
-                case 3 -> movieList.get(mvPosition).setPrice(MyUtil.inputDouble("New price: ", 0));
-                case 4 -> movieList.get(mvPosition).changeShowtime();
+                case 1 -> movieList.get(mvPostion).setMovieName(movieList);
+                case 2 -> movieList.get(mvPostion).setAuthor();
+                case 3 -> movieList.get(mvPostion).setPrice(MyUtil.inputDouble("New price: ", 0));
+                case 4 -> movieList.get(mvPostion).changeShowtime();
                 case 5 -> {
-                    int slotToRemove = MyUtil.inputInteger("Choose movie slot to remove: ",
-                            0, movieList.get(mvPosition).getShowTime().size() - 1);
-                    movieList.get(mvPosition).getShowTime().remove(slotToRemove);
+                    int slotToRemove = MyUtil.inputInterger("Choose movie slot to remove: ",
+                            0, movieList.get(mvPostion).getShowTime().size() - 1);
+                    movieList.get(mvPostion).getShowTime().remove(slotToRemove);
                 }
             }
         }while (choice!=6);
