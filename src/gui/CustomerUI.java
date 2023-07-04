@@ -36,19 +36,21 @@ public class CustomerUI {
             System.out.println("1. Show account information.");
             System.out.println("2. Update account.");
             System.out.println("3. Buy movie tickets.");
-            System.out.println("4. Delete account.");
-            System.out.println("5. Log out.");
+            System.out.println("4. Refund tickets.");
+            System.out.println("5. Delete account.");
+            System.out.println("6. Log out.");
             System.out.println("===========================");
-            choice = MyUtil.inputInteger("Your choice: ",1,5);
+            choice = MyUtil.inputInteger("Your choice: ",1,6);
             switch (choice){
                 case 1 -> customer.showInfo(userList);
                 case 2 -> customer.updateCustomer(userList);
                 case 3 -> customer.buyTicket(movieList,ticketList);
-                case 4 -> {
+                case 4 -> customer.refundTicket(ticketList,movieList);
+                case 5 -> {
                     customer.deleteUser(userList,ticketList);
-                    choice = 5;
+                    choice = 6;
                 }
             }
-        }while(choice!=5);
+        }while(choice!=6);
     }
 }

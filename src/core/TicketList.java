@@ -84,10 +84,44 @@ public class TicketList extends ArrayList<Ticket>{
         return a;
     }
 
-    public void showTicket(int username){
-        for(Ticket ticket: this){
-
+    public int findTicket(String movieName,String showtime){
+        for(int i=0;i<this.size();i++){
+            if(this.get(i).getMovieName().equals(movieName)){
+                if(this.get(i).getShowTime().equals(showtime)){
+                    return i;
+                }
+            }
         }
+        return -1;
+    }
+
+    public void showTicket(String username){
+        System.out.println("Ticket you have bought:");
+        for(Ticket ticket: this){
+            if(ticket.getUserName().equals(username)) {
+                //Movie name
+                System.out.println("\tMovie: "+ticket.getMovieName());
+                //Show Time
+                String []elements = ticket.getShowTime().split("/");
+                System.out.print("\tOn "+elements[0]+"/"+elements[1]+" slot "+elements[2]+": ");
+                switch (elements[2]){
+                    case "1" -> System.out.println("7:00 - 9:00");
+                    case "2" -> System.out.println("10:00 - 12:00");
+                    case "3" -> System.out.println("13:00 - 15:00");
+                    case "4" -> System.out.println("16:00 - 18:00");
+                    case "5" -> System.out.println("19:00 - 21:00");
+                }
+                //Seat
+                System.out.print("\tSeat ordered:");
+                if(ticket.getSeatOrdered()!=null){
+                    for(int seat:ticket.getSeatOrdered()){
+                        System.out.print(" "+seat);
+                    }
+                }
+                System.out.println();
+            }
+        }
+        System.out.println();
     }
 
 }

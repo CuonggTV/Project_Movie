@@ -1,6 +1,8 @@
 package core;
 
 import utils.MyUtil;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Customer extends User{
@@ -154,7 +156,51 @@ public class Customer extends User{
         }
     }
 
-    public void refundTicket(TicketList ticketList){
+    public void refundTicket(TicketList ticketList, MovieList movieList){
+       ticketList.showTicket(this.getUsername());
+       String movieName,showtime;
+       int refundPosition = 0;
+       int numberOfSeatRefund = 0;
 
+       do{
+           movieName = MyUtil.inputString("Enter movie name");
+           showtime = MyUtil.inputString("Enter your time (dd/mm/slot)");
+           refundPosition=ticketList.findTicket(movieName,showtime);
+           if(refundPosition==-1){
+               if(!MyUtil.continueAfterWrongInput("You haven't bought this film yet!")) return;
+           }
+
+       }while(refundPosition!=-1);
+
+       boolean loop;
+       do {
+           loop=false;
+           String []seats = MyUtil.inputString("Which seats you want to refund?").split(" ");
+           for(String x: seats){
+               int seat = 0;
+               try {
+                   seat = Integer.parseInt(x);
+                   if (seat <=10 || seat>=100 ||seat%10==0) throw new NumberFormatException();
+               }
+               catch(NumberFormatException e){
+                   System.out.println("Wrong seat format!");
+                   loop=true;
+               }
+               for (int i =0;i<ticketList.get(refundPosition).getSeatOrdered().size();i++){
+                   if(ticketList.get(refundPosition).getSeatOrdered().get(i) == seat){
+                       ticketList.get(refundPosition).getSeatOrdered().remove(i);
+                       numberOfSeatRefund++;
+                   }
+               }
+           }
+       }while(loop);
+
+
+       //Refund
+        for (Movie movie:movieList){
+            if(movie.getMovieName().equals(movieName)){
+                wallet += (movie.getPrice()*numberOfSeatRefund)/2;
+            }
+        }
     }
 }
