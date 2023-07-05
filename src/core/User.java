@@ -67,20 +67,25 @@ public class User {
 
     public void setFullName() {
         String fullName;
+        boolean loop;
         do
         {
+            loop = false;
             fullName = MyUtil.inputString("Input FullName: ");
             if(fullName.length() > 30){
                 System.out.println("Maximum 30 characters!!!");
                 continue;
             }
-            if(!fullName.matches("[a-zA-Z\\t]+")){
-                System.out.println("Full name just contains alphabet!");
-                System.out.println("Please enter again.");
-                continue;
+            String []letters = fullName.split(" ");
+            for (String letter : letters) {
+                if (!letter.matches("^[A-Z]{1}[a-z]+")) {
+                    System.out.println("Full name just contains alphabet and has a capital at the start letter!");
+                    System.out.println("Please enter again.");
+                    loop = true;
+                    break;
+                }
             }
-            break;
-        } while (true);
+        } while (loop);
         this.fullName = fullName;
     }
 
@@ -129,7 +134,7 @@ public class User {
     {
         System.out.println("Your Money: " + wallet + " VND");
         moneyAdd = MyUtil.inputDouble("How much money do you want to add?",0);
-        wallet += moneyAdd;
+        this.wallet += moneyAdd;
         System.out.println("You have added " + moneyAdd + " VND");
         System.out.println("Your money: " + wallet + " VND");
     }

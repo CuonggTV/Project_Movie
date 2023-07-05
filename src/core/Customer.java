@@ -17,16 +17,19 @@ public class Customer extends User{
         System.out.println("Full Name: " + userList.get(pos).getFullName());
         System.out.println("Phone Number: " + userList.get(pos).getPhoneNumber());
         System.out.println("Email: " + userList.get(pos).getEmail());
-        System.out.println("Wallet: " + userList.get(pos).getWallet());
+        System.out.println("Wallet: " + userList.get(pos).getWallet() +"$");
     }
 
     private int chooseMovieAndSlot(MovieList movieList){
         int mvPosition =movieList.findMoviePosition();
         if(mvPosition==-1) return mvPosition;
-        for(String x: movieList.get(mvPosition).getShowTime()){
-            System.out.println(x);
+        if(movieList.get(mvPosition).getShowTime()!=null){
+            movieList.showMovieInfo(mvPosition);
         }
-
+        else {
+            System.out.println("This film hasn't had showtime yet!");
+            return -1;
+        }
         return mvPosition;
     }
 
@@ -90,9 +93,10 @@ public class Customer extends User{
         return ticketBought;
     }
 
-    public void buyTicket(MovieList movieList, TicketList ticketList){
+    public void buyTicket(MovieList movieList, TicketList ticketList,UserList userList){
         //Choose movie
         String movieName,slot;
+        movieList.showAllMoviesInfo();
         int mvPosition = chooseMovieAndSlot(movieList);
         if(mvPosition==-1) return;
         movieName = movieList.get(mvPosition).getMovieName();
@@ -107,17 +111,20 @@ public class Customer extends User{
         if(ticketBought==null) return;
 
         //Thanh toan ve
-        if(getWallet() < price){
+        price = price*ticketBought.size();
+        int pos = userList.findUserPosition(getUsername());
+        System.out.println("Total price: "+price+ "$");
+        System.out.println("Your wallet: "+getWallet()+"$");
+
+        if(userList.get(pos).getWallet() < price){
             System.out.println("You don't have enough money!");
             return;
         }
         else{
-            System.out.println("Total price: "+price*ticketBought.size());
-            System.out.println("Your wallet: "+getWallet());
-            if(!MyUtil.continueAfterWrongInput("You want to pay?")){
+            if(!MyUtil.continueAfterWrongInput("Do you want to pay?")){
                 return;
             }
-            wallet-=price*ticketBought.size();
+            userList.get(pos).setWallet(userList.get(pos).getWallet()-price);
             System.out.println("Bought successfully!");
         }
 
@@ -139,6 +146,10 @@ public class Customer extends User{
         ticketList.add(newTicket);
     }
     public void deleteUser(UserList userList,TicketList ticketList){
+
+        if(!MyUtil.continueAfterWrongInput("Are you sure to delete this account?")){
+            return;
+        }
         //Xoa ve da mua
         for(int i=0;i<ticketList.size();i++){
             if(ticketList.get(i).getUserName().equals(getUsername())){
@@ -194,8 +205,6 @@ public class Customer extends User{
                }
            }
        }while(loop);
-
-
        //Refund
         for (Movie movie:movieList){
             if(movie.getMovieName().equals(movieName)){

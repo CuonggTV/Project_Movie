@@ -4,7 +4,6 @@ import utils.MyUtil;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MovieList extends ArrayList<Movie> {
     private static final String FILENAME = "src\\data\\MovieData.txt";
@@ -121,7 +120,7 @@ public class MovieList extends ArrayList<Movie> {
         for (int i=0;i<this.size();i++){
             if(this.get(i).getShowTime()!=null){
                 for (int j=0;i<this.get(i).getShowTime().size();i++){
-                    if (!this.get(i).checkTimeAgainstCurrentTime(this.get(i).getShowTime().get(j))){
+                    if (this.get(i).checkTimeAgainstCurrentTime(this.get(i).getShowTime().get(j))){
                         this.get(i).getShowTime().remove(j);
                     }
                 }

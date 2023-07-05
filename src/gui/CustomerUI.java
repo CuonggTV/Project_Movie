@@ -44,7 +44,7 @@ public class CustomerUI {
             switch (choice){
                 case 1 -> customer.showInfo(userList);
                 case 2 -> customer.updateCustomer(userList);
-                case 3 -> customer.buyTicket(movieList,ticketList);
+                case 3 -> customer.buyTicket(movieList,ticketList,userList);
                 case 4 -> customer.refundTicket(ticketList,movieList);
                 case 5 -> {
                     customer.deleteUser(userList,ticketList);

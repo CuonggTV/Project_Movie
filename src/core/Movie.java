@@ -52,15 +52,20 @@ public class Movie {
 
     public void setAuthor() {
         String author;
+        boolean loop;
         do{
+            loop = false;
             author = MyUtil.inputString("New author: ");
-            if(!author.matches("[a-zA-Z\\t]+")){
-                System.out.println("Author just contains alphabet!");
-                System.out.println("Please enter again.");
-                continue;
+            String []letters = author.split(" ");
+            for (String letter : letters) {
+                if (!letter.matches("^[A-Z]{1}[a-z]+")) {
+                    System.out.println("Author just contains alphabet and has a capital at the start letter!");
+                    System.out.println("Please enter again.");
+                    loop = true;
+                    break;
+                }
             }
-            break;
-        }while(true);
+        }while(loop);
         this.author =author;
     }
 
@@ -75,7 +80,7 @@ public class Movie {
             if(date == null) return;
             int slot = MyUtil.inputInteger("Enter slot: ", 1, 5);
             result = date+ "/" + slot;
-            if (!checkTimeAgainstCurrentTime(result)){
+            if (checkTimeAgainstCurrentTime(result)){
                 System.out.println("This time is outdated!");
                 continue;
             }
@@ -123,14 +128,14 @@ public class Movie {
         int curMonth = calendar.get(Calendar.MONTH);
         int curHour = calendar.get(Calendar.HOUR_OF_DAY);
 
-        if(day < curDay || month < curMonth) return false;
-        else if(day>curDay) return true;
+        if(day < curDay || month < curMonth) return true;
+        else if(day>curDay) return false;
 
 
-        if(slot == 1 && curHour < 7) return true;
-        else if(slot == 2 && curHour < 10) return true;
-        else if(slot == 3 && curHour < 13) return true;
-        else if(slot == 4 && curHour < 16) return true;
-        else return slot == 5 && curHour < 19;
+        if(slot == 1 && curHour < 7) return false;
+        else if(slot == 2 && curHour < 10) return false;
+        else if(slot == 3 && curHour < 13) return false;
+        else if(slot == 4 && curHour < 16) return false;
+        else return slot != 5 || curHour >= 19;
     }
 }

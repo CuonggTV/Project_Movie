@@ -61,7 +61,7 @@ public class UserList extends ArrayList<User> {
     public User register() {
         User newUser = new User();
 
-        newUser.setFullName();
+        newUser.setUsername();
         newUser.setPassword();
         newUser.setFullName();
         newUser.setPhoneNumber();

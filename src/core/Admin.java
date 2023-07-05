@@ -55,6 +55,7 @@ public class Admin  {
     }
     public void deleteMovie(MovieList movieList, TicketList ticketList,UserList userList){
         int mvPosition = movieList.findMoviePosition();
+        if (mvPosition==-1) return;
         //Refund cho ng dung
 
         //Xoa ticket

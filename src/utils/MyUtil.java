@@ -28,7 +28,7 @@ public class MyUtil {
             if (value >= min) {
                 return value;
             }
-            System.out.println("Value must be a number!");
+            System.out.println("Value must be a positive number!");
         } while (true);
     }
 
