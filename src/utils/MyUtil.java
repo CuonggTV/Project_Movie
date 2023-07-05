@@ -1,4 +1,5 @@
 package utils;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class MyUtil {
@@ -79,5 +80,27 @@ public class MyUtil {
             }
         }while(day==-1);
         return  day + "/" +month;
+    }
+
+    public static boolean checkTimeAgainstCurrentTime(String time){
+        String []elements = time.split("/");
+        int day = Integer.parseInt(elements[0]);
+        int month = Integer.parseInt(elements[1]);
+        int slot = Integer.parseInt(elements[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        int curDay = calendar.get(Calendar.DATE);
+        int curMonth = calendar.get(Calendar.MONTH);
+        int curHour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if(day < curDay || month < curMonth) return true;
+        else if(day>curDay) return false;
+
+
+        if(slot == 1 && curHour < 7) return false;
+        else if(slot == 2 && curHour < 10) return false;
+        else if(slot == 3 && curHour < 13) return false;
+        else if(slot == 4 && curHour < 16) return false;
+        else return slot != 5 || curHour >= 19;
     }
 }

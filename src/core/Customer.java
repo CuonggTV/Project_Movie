@@ -1,8 +1,6 @@
 package core;
 
 import utils.MyUtil;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Customer extends User{
@@ -33,7 +31,7 @@ public class Customer extends User{
         return mvPosition;
     }
 
-    public void updateCustomer(UserList userList){
+    public void updateCustomer(UserList userList, TicketList ticketList){
         int pos = userList.findUserPosition(getUsername());
         int choice;
         do{
@@ -49,7 +47,12 @@ public class Customer extends User{
 
             System.out.flush();
             switch (choice) {
-                case 1 -> userList.get(pos).setUsername();
+                case 1 -> {
+                    String oldUsername = userList.get(pos).getUsername();
+                    userList.get(pos).setUsername();
+                    String newUsername = userList.get(pos).getUsername();
+                    ticketList.changeTicketUserName(oldUsername,newUsername);
+                }
                 case 2 -> userList.get(pos).setPassword();
                 case 3 -> userList.get(pos).setFullName();
                 case 4 -> userList.get(pos).setPhoneNumber();
@@ -167,7 +170,7 @@ public class Customer extends User{
         }
     }
 
-    public void refundTicket(TicketList ticketList, MovieList movieList){
+    public void refundTicket(TicketList ticketList, MovieList movieList,UserList userList){
        ticketList.showTicket(this.getUsername());
        String movieName,showtime;
        int refundPosition = 0;
@@ -180,8 +183,7 @@ public class Customer extends User{
            if(refundPosition==-1){
                if(!MyUtil.continueAfterWrongInput("You haven't bought this film yet!")) return;
            }
-
-       }while(refundPosition!=-1);
+       }while(refundPosition==-1);
 
        boolean loop;
        do {
@@ -205,11 +207,17 @@ public class Customer extends User{
                }
            }
        }while(loop);
+
+       if(ticketList.get(refundPosition).getSeatOrdered().isEmpty()){
+           ticketList.remove(refundPosition);
+       }
        //Refund
         for (Movie movie:movieList){
             if(movie.getMovieName().equals(movieName)){
-                wallet += (movie.getPrice()*numberOfSeatRefund)/2;
+                int pos =userList.findUserPosition(getUsername());
+                userList.get(pos).setWallet(userList.get(pos).getWallet()+(movie.getPrice()*numberOfSeatRefund)/2);
             }
         }
+        System.out.println("Refund successfully!");
     }
 }

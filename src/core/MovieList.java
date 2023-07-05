@@ -4,6 +4,7 @@ import utils.MyUtil;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MovieList extends ArrayList<Movie> {
     private static final String FILENAME = "src\\data\\MovieData.txt";
@@ -27,13 +28,10 @@ public class MovieList extends ArrayList<Movie> {
                 String author = row[1];
                 double price = Double.parseDouble(row[2]);
                 ArrayList<String> showTime = new ArrayList<>();
-                if(row.length-1==3){
-                    for(int i = 3;i<row.length;i++){
-                        showTime.add(row[i]);
-                    }
+                if(row.length-1>=3){
+                    showTime.addAll(Arrays.asList(row).subList(3, row.length));
                     //showTime = new ArrayList<>(Arrays.asList(row).subList(3, row.length-1));
                 }
-                else showTime = null;
                 Movie movie = new Movie(movieName,author,price,showTime);
                 this.add(movie);
             }
@@ -119,8 +117,8 @@ public class MovieList extends ArrayList<Movie> {
     public void deleteOutdatedShowTime(){
         for (int i=0;i<this.size();i++){
             if(this.get(i).getShowTime()!=null){
-                for (int j=0;i<this.get(i).getShowTime().size();i++){
-                    if (this.get(i).checkTimeAgainstCurrentTime(this.get(i).getShowTime().get(j))){
+                for (int j=0;j<this.get(i).getShowTime().size();j++){
+                    if (MyUtil.checkTimeAgainstCurrentTime(this.get(i).getShowTime().get(j))){
                         this.get(i).getShowTime().remove(j);
                     }
                 }

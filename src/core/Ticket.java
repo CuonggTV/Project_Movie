@@ -8,9 +8,6 @@ public class Ticket {
     private ArrayList<Integer> seatOrdered = new ArrayList<>();
     private String showTime;
 
-    public Ticket() {
-    }
-
     public Ticket(String movieName, String userName,String showTime,ArrayList<Integer> seatOrdered) {
         this.movieName = movieName;
         this.userName = userName;

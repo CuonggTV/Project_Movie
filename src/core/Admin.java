@@ -21,7 +21,7 @@ public class Admin  {
         movieList.get(mvPostion).setShowTime();
     }
 
-    public void updateMovie(MovieList movieList){
+    public void updateMovie(MovieList movieList,TicketList ticketList){
         //Find film
         int mvPostion = movieList.findMoviePosition();
         if(mvPostion==-1) return;
@@ -41,7 +41,12 @@ public class Admin  {
 
             System.out.flush();
             switch (choice) {
-                case 1 -> movieList.get(mvPostion).setMovieName(movieList);
+                case 1 -> {
+                    String oldName = movieList.get(mvPostion).getMovieName();
+                    movieList.get(mvPostion).setMovieName(movieList);
+                    String newName = movieList.get(mvPostion).getMovieName();
+                    ticketList.changeTicketMovieName(oldName,newName);
+                }
                 case 2 -> movieList.get(mvPostion).setAuthor();
                 case 3 -> movieList.get(mvPostion).setPrice(MyUtil.inputDouble("New price: ", 0));
                 case 4 -> movieList.get(mvPostion).changeShowtime();
@@ -62,10 +67,10 @@ public class Admin  {
         for(int i=0;i<ticketList.size();i++){
             if(ticketList.get(i).getMovieName().equals(movieList.get(mvPosition).getMovieName())){
                 //Refund cho ng dung
-                for(int j=0;i<userList.size();i++){
+                for(int j=0;j<userList.size();j++){
                     if(ticketList.get(i).getUserName().equals(userList.get(j).getUsername())){
                         double pricePerTicket = movieList.get(mvPosition).getPrice();
-                        double seatOrdered = ticketList.get(mvPosition).getSeatOrdered().size();
+                        double seatOrdered = ticketList.get(i).getSeatOrdered().size();
                         userList.get(j).setWallet(userList.get(j).getWallet() + pricePerTicket * seatOrdered);
                         break;
                     }

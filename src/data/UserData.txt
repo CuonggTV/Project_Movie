@@ -1,4 +1,4 @@
 Username, Password, Full name, PhoneNumber, Email, Wallet
 kaydentester, 123123Red@, Nguyen Dai Thinh, 1231231231, nguyendaithinhproo@gmail.com, 0.0
 jack, jack1412@, jackie the f1, 0123456789, jack1001@gmail.com, 0.0
-aaaa, aaaa1234@, Cuong Tc, 0123456789, aaaa1234@gmail.com, 88.0
+aaaa, aaaa1234@, Cuong Tc, 0123456789, aaaa1234@gmail.com, 87.5

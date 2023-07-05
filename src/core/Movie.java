@@ -9,7 +9,7 @@ public class Movie {
     private String movieName;
     private String author;
     private double price;
-    private ArrayList<String> showTime = new ArrayList<>();
+    private ArrayList<String> showTime = new ArrayList<String>();
     public Movie() {
     }
 
@@ -80,7 +80,7 @@ public class Movie {
             if(date == null) return;
             int slot = MyUtil.inputInteger("Enter slot: ", 1, 5);
             result = date+ "/" + slot;
-            if (checkTimeAgainstCurrentTime(result)){
+            if (MyUtil.checkTimeAgainstCurrentTime(result)){
                 System.out.println("This time is outdated!");
                 continue;
             }
@@ -117,25 +117,5 @@ public class Movie {
         changeShowtime();
     }
 
-    public boolean checkTimeAgainstCurrentTime(String time){
-        String []elements = time.split("/");
-        int day = Integer.parseInt(elements[0]);
-        int month = Integer.parseInt(elements[1]);
-        int slot = Integer.parseInt(elements[2]);
 
-        Calendar calendar = Calendar.getInstance();
-        int curDay = calendar.get(Calendar.DATE);
-        int curMonth = calendar.get(Calendar.MONTH);
-        int curHour = calendar.get(Calendar.HOUR_OF_DAY);
-
-        if(day < curDay || month < curMonth) return true;
-        else if(day>curDay) return false;
-
-
-        if(slot == 1 && curHour < 7) return false;
-        else if(slot == 2 && curHour < 10) return false;
-        else if(slot == 3 && curHour < 13) return false;
-        else if(slot == 4 && curHour < 16) return false;
-        else return slot != 5 || curHour >= 19;
-    }
 }

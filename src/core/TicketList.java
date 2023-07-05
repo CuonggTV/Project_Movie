@@ -1,5 +1,7 @@
 package core;
 
+import utils.MyUtil;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -94,6 +96,30 @@ public class TicketList extends ArrayList<Ticket>{
         }
         return -1;
     }
+    public void changeTicketMovieName(String movieName,String newName){
+        for(int i=0;i<this.size();i++){
+            if(this.get(i).getMovieName().equals(movieName)){
+                this.get(i).setMovieName(newName);
+            }
+        }
+    }
+    public void changeTicketUserName(String username,String newName){
+        for(int i=0;i<this.size();i++){
+            if(this.get(i).getUserName().equals(username)){
+                this.get(i).setUserName(newName);
+            }
+        }
+    }
+
+    public void changeTicketShowTime(String showtime,String newSt){
+        for(int i=0;i<this.size();i++){
+            if(this.get(i).getShowTime().equals(showtime)){
+                this.get(i).setShowTime(newSt);
+            }
+        }
+    }
+
+
 
     public void showTicket(String username){
         System.out.println("Ticket you have bought:");
@@ -122,6 +148,14 @@ public class TicketList extends ArrayList<Ticket>{
             }
         }
         System.out.println();
+    }
+
+    public void deleteOutdatedTicket(){
+        for (int i=0;i<this.size();i++){
+            if (MyUtil.checkTimeAgainstCurrentTime(this.get(i).getShowTime())){
+                this.remove(i);
+            }
+        }
     }
 
 }

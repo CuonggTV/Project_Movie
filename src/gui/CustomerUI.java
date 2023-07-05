@@ -43,9 +43,9 @@ public class CustomerUI {
             choice = MyUtil.inputInteger("Your choice: ",1,6);
             switch (choice){
                 case 1 -> customer.showInfo(userList);
-                case 2 -> customer.updateCustomer(userList);
+                case 2 -> customer.updateCustomer(userList,ticketList);
                 case 3 -> customer.buyTicket(movieList,ticketList,userList);
-                case 4 -> customer.refundTicket(ticketList,movieList);
+                case 4 -> customer.refundTicket(ticketList,movieList,userList);
                 case 5 -> {
                     customer.deleteUser(userList,ticketList);
                     choice = 6;

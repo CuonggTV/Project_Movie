@@ -40,7 +40,7 @@ public class AdminUI {
                 case 1 -> admin.createMovie(movieList);
                 case 2 -> admin.addShowTime(movieList);
                 case 3 -> movieList.showAllMoviesInfo();
-                case 4 -> admin.updateMovie(movieList);
+                case 4 -> admin.updateMovie(movieList,ticketList);
                 case 5 -> admin.deleteMovie(movieList,ticketList,userList);
             }
         }while(choice!=6);
